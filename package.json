@@ -1,8 +1,11 @@
 {
-  "name": "poploy",
+  "name": "popploy",
   "version": "1.0.10",
+  "bin": {
+    "popploy": "./scripts/cli.js"
+  },
   "scripts": {
-    "popploy": "node ./scripts/popploy.js"
+    "popploy": "node ./scripts/cli.js"
   },
   "main": "index.js",
   "license": "MIT",

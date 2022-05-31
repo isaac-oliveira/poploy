@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const shell = require("shelljs");
 
-const popploy = require("../popploy.json");
+const popploy = require("../../popploy.json");
 const updateVersion = require("./update-version");
 const getValue = require("./get-value");
 const io = require("./io");
