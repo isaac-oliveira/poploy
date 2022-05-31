@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const shell = require("shelljs");
 
-const popploy = require("../../popploy.json");
 const updateVersion = require("./update-version");
 const getValue = require("./get-value");
 const io = require("./io");
@@ -9,12 +8,21 @@ const io = require("./io");
 const argv = require("minimist")(process.argv.slice(2));
 
 const {
-  _: [env, ...args],
+  _: [firstArg, ...args],
 } = argv;
 
 io.log("\n-----------------------------------", "green");
 io.log("      Welcome to the Popploy!      ", "green");
 io.log("-----------------------------------\n", "green");
+
+if (firstArg === "init") {
+  require("./init");
+  return;
+}
+
+const popploy = require("../../../popploy.json");
+
+const env = firstArg;
 
 const clonePath = "tmp-clone";
 
@@ -52,10 +60,12 @@ const main = async () => {
   } catch (e) {
     io.error(e);
     console.log("Nenhuma alteração encontrada.");
+    shell.cd("..");
     shell.exec(`npx rimraf ${clonePath}`);
     return;
   }
 
+  shell.cd("..");
   shell.exec(`npx rimraf ${clonePath}`);
 };
 

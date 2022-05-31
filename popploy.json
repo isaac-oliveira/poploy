@@ -1,7 +1,7 @@
 {
   "gitUrl": "https://github.com/isaac-oliveira/teste-script.git",
   "branchsEnv": {
-    "development": "development",
+    "development": "develop",
     "staging": "staging",
     "production": "main"
   }
