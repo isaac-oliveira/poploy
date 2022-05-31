@@ -1,8 +1,0 @@
-{
-  "gitUrl": "https://github.com/isaac-oliveira/teste-script.git",
-  "branchsEnv": {
-    "development": "develop",
-    "staging": "staging",
-    "production": "main"
-  }
-}
