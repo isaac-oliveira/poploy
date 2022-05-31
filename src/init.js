@@ -10,7 +10,7 @@ const main = async () => {
   );
 
   fs.writeFileSync(
-    path.resolve(__dirname, "..", "popploy.json"),
+    path.resolve(__dirname, "popploy.json"),
     `{\n\t"gitUrl": "${gitUrl}",\n\t"branchsEnv": {\n\t\t"production": "${defaultBranch}"\n\t}\n}`,
     { encoding: "utf-8" }
   );
