@@ -1,6 +1,6 @@
 {
   "name": "popploy",
-  "version": "1.0.10",
+  "version": "1.0.1",
   "bin": {
     "popploy": "./src/index.js"
   },

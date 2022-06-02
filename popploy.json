@@ -1,0 +1,9 @@
+{
+  "gitUrl": "https://github.com/isaac-oliveira/teste-script.git",
+  "branchsEnv": {
+    "production": "main",
+    "staging": "staging",
+    "development": "development"
+  },
+  "exclude": ["node_modules"]
+}

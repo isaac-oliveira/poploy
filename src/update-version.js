@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 
-const rootProjectPath = path.join(__dirname, "..", "..", "..");
+const rootProjectPath = path.join(__dirname, "..");
 const packageFilePath = path.join(rootProjectPath, "package.json");
 
 const searchRegex = /("version": ")\d+\.\d+\.\d+/;

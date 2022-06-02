@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 const shell = require("shelljs");
+const fs = require("fs");
+const path = require("path");
 
 const updateVersion = require("./update-version");
 const getValue = require("./get-value");
@@ -20,7 +22,7 @@ if (firstArg === "init") {
   return;
 }
 
-const popploy = require("../../../popploy.json");
+const popploy = require("../popploy.json");
 
 const env = firstArg;
 
@@ -28,6 +30,7 @@ const clonePath = "tmp-clone";
 
 const gitUrl = popploy.gitUrl;
 const branch = popploy.branchsEnv[env];
+const exclude = popploy.exclude;
 const version = getValue(args, "version");
 
 const main = async () => {
@@ -51,8 +54,14 @@ const main = async () => {
     shell.exec(`git clone ${gitUrl} ${clonePath}`);
     shell.cd(clonePath);
     shell.exec(`git checkout -B ${branch}`);
+
     shell.cd("..");
-    shell.exec(`cp -r teste.md ${clonePath}`);
+    const files = fs
+      .readdirSync(path.resolve(__dirname, ".."))
+      .filter((item) => !exclude.includes(item) && item !== clonePath);
+    const fileToAdd = files.join(" ");
+
+    shell.exec(`cp -r ${fileToAdd} ${clonePath}`);
     shell.cd(clonePath);
     shell.exec("git add .");
     shell.exec(`git commit -m "publish ${version}"`);
