@@ -75,10 +75,12 @@ const main = async () => {
       .filter((item) => !exclude.includes(item));
     const fileToAdd = files.join(" ");
 
-    shell.exec(`cd .. && cp -r ${fileToAdd} ${clonePath} && cd ${clonePath}`);
-    shell.exec("git add .");
-    shell.exec(`git commit -m "publish ${version}"`);
-    shell.exec(`git push origin ${branch} --force`);
+    if (fileToAdd.length !== 0) {
+      shell.exec(`cd .. && cp -r ${fileToAdd} ${clonePath} && cd ${clonePath}`);
+      shell.exec("git add .");
+      shell.exec(`git commit -m "publish ${version}"`);
+      shell.exec(`git push origin ${branch} --force`);
+    }
   } catch (e) {
     io.error(e);
     console.log("Nenhuma alteração encontrada.");
