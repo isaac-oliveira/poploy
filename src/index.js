@@ -24,14 +24,28 @@ if (firstArg === "init") {
 
 const popploy = require("../popploy.json");
 
-const env = firstArg;
-
 const clonePath = "tmp-clone";
-
+const env = firstArg;
 const gitUrl = popploy.gitUrl;
 const branch = popploy.branchsEnv[env];
-const exclude = popploy.exclude;
+const exclude = [...popploy.exclude, clonePath, ".git", "popploy.json"];
 const version = getValue(args, "version");
+
+const keys = Object.keys(popploy.branchsEnv);
+
+if (!keys.includes(env)) {
+  console.log(
+    `'env' inválida! valores aceitos: ${Object.keys(popploy.branchsEnv).join(
+      ", "
+    )}`
+  );
+  return;
+}
+
+if (!/\d+.\d+.\d+/.test(version)) {
+  console.log("'version' inválido, favor use o padrão x.x.x");
+  return;
+}
 
 const main = async () => {
   io.table({ gitUrl, env, branch, version });
@@ -54,15 +68,14 @@ const main = async () => {
     shell.exec(`git clone ${gitUrl} ${clonePath}`);
     shell.cd(clonePath);
     shell.exec(`git checkout -B ${branch}`);
+    shell.exec(`find . -type 'f' | grep -v ".git" | xargs rm -r`);
 
-    shell.cd("..");
     const files = fs
       .readdirSync(path.resolve(__dirname, ".."))
-      .filter((item) => !exclude.includes(item) && item !== clonePath);
+      .filter((item) => !exclude.includes(item));
     const fileToAdd = files.join(" ");
 
-    shell.exec(`cp -r ${fileToAdd} ${clonePath}`);
-    shell.cd(clonePath);
+    shell.exec(`cd .. && cp -r ${fileToAdd} ${clonePath} && cd ${clonePath}`);
     shell.exec("git add .");
     shell.exec(`git commit -m "publish ${version}"`);
     shell.exec(`git push origin ${branch} --force`);

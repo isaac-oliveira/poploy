@@ -5,5 +5,5 @@
     "staging": "staging",
     "development": "development"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "yarn.lock"]
 }
