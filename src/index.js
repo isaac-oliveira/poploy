@@ -22,7 +22,7 @@ if (firstArg === "init") {
   return;
 }
 
-const popploy = require("../popploy.json");
+const popploy = require("../../../popploy.json");
 
 const clonePath = "tmp-clone";
 const env = firstArg;
