@@ -71,7 +71,7 @@ const main = async () => {
     shell.exec(`find . -type 'f' | grep -v ".git" | xargs rm -r`);
 
     const files = fs
-      .readdirSync(path.resolve(__dirname, ".."))
+      .readdirSync(path.resolve(__dirname, "..", "..", ".."))
       .filter((item) => !exclude.includes(item));
     const fileToAdd = files.join(" ");
 
