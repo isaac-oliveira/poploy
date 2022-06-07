@@ -28,7 +28,8 @@ const clonePath = "tmp-clone";
 const env = firstArg;
 const gitUrl = popploy.gitUrl;
 const branch = popploy.branchsEnv[env];
-const exclude = [...popploy.exclude, clonePath, ".git", "popploy.json"];
+const repoExclude = [...popploy.repoExclude, ".git"];
+const copyExclude = [...popploy.copyExclude, clonePath, ".git", "popploy.json"];
 const version = getValue(args, "version");
 
 const keys = Object.keys(popploy.branchsEnv);
@@ -67,13 +68,16 @@ const main = async () => {
   try {
     shell.exec(`git clone ${gitUrl} ${clonePath}`);
     shell.cd(clonePath);
-    shell.exec(`git checkout -B ${branch}`);
-    shell.exec(`find . -type 'f' | grep -v ".git" | xargs rm -r`);
+    shell.exec(`git checkout ${branch}`);
 
-    const files = fs
-      .readdirSync(path.resolve(__dirname, ".."))
-      .filter((item) => !exclude.includes(item));
-    const fileToAdd = files.join(" ");
+    const repoFile = fs.readdirSync(path.resolve(__dirname, "..", "..", "..", clonePath)).filter((item) => !repoExclude.includes(item))
+
+    repoFile.forEach(item => shell.exec(`rm -rf ${item}`))
+      
+    const copyFile = fs
+      .readdirSync(path.resolve(__dirname, "..", "..", ".."))
+      .filter((item) => !copyExclude.includes(item));
+    const fileToAdd = copyFile.join(" ");
 
     if (fileToAdd.length !== 0) {
       shell.exec(`cd .. && cp -r ${fileToAdd} ${clonePath} && cd ${clonePath}`);
