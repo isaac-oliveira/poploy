@@ -83,6 +83,7 @@ const main = async () => {
 
     if (fileToAdd.length !== 0) {
       shell.exec(`cd .. && cp -r ${fileToAdd} ${clonePath} && cd ${clonePath}`);
+      shell.exec("yarn remove popploy");
       shell.exec("git add .");
       shell.exec(`git commit -m "publish ${version}"`);
       shell.exec(`git push origin ${branch} --force`);
