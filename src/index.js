@@ -70,10 +70,12 @@ const main = async () => {
     shell.cd(clonePath);
     shell.exec(`git checkout ${branch}`);
 
-    const repoFile = fs.readdirSync(path.resolve(__dirname, "..", "..", "..", clonePath)).filter((item) => !repoExclude.includes(item))
+    const repoFile = fs
+      .readdirSync(path.resolve(__dirname, "..", "..", "..", clonePath))
+      .filter((item) => !repoExclude.includes(item));
 
-    repoFile.forEach(item => shell.exec(`rm -rf ${item}`))
-      
+    repoFile.forEach((item) => shell.exec(`rm -rf ${item}`));
+
     const copyFile = fs
       .readdirSync(path.resolve(__dirname, "..", "..", ".."))
       .filter((item) => !copyExclude.includes(item));
