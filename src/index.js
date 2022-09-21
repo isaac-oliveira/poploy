@@ -85,7 +85,7 @@ const main = async () => {
     if (fileToAdd.length !== 0) {
       shell.exec(`cd .. `)
       copyFile.map((item) => {
-        fsExtra.copy(path.resolve(__dirname,"..","..", "..", item), item)
+        fsExtra.copySync(path.resolve(__dirname,"..","..", "..", item), item)
       })
       shell.exec(`cd ${clonePath}`);
       shell.exec("yarn remove popploy");
