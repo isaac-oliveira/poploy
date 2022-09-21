@@ -1,6 +1,6 @@
 # POPPLOY
 
-Popploy é um script para automatizar o deploy do bff já que o mesmo necessita ser enviado para um repositório da SEAC para rodar uma pipeline e ser enviado para o servidor, porém já utilizamos um repositório da Popcode que tem uma estrutura de branch diferente, daí surgiu a ideia da criação do script, ele consegue ser usado em qualquer projeto que tenha o mesmo problema citado acima.
+Popploy é um script para automatizar o deploy do bff já que o mesmo necessita ser enviado para um repositório da SEAC para rodar uma pipeline e ser enviado para o servidor, porém já utilizamos um repositório da Popcode que tem uma estrutura de branch diferente, daí surgiu a ideia da criação do script, ele consegue ser usado em qualquer projeto que tenha o mesmo problema sitado acima.
 
 # Getting Started
 

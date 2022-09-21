@@ -74,7 +74,7 @@ const main = async () => {
       .readdirSync(path.resolve(__dirname, "..", "..", "..", clonePath))
       .filter((item) => !repoExclude.includes(item));
 
-    repoFile.forEach((item) => shell.exec(`npx rimraf ${item}`));
+    repoFile.forEach((item) => shell.exec(`rm -rf ${item}`));
 
     const copyFile = fs
       .readdirSync(path.resolve(__dirname, "..", "..", ".."))
@@ -82,11 +82,7 @@ const main = async () => {
     const fileToAdd = copyFile.join(" ");
 
     if (fileToAdd.length !== 0) {
-      shell.exec(`cd .. `)
-      copyFile.map((item) => {
-        fs.copyFileSync(path.resolve(__dirname,"..","..", "..", item), item)
-      })
-      shell.exec(`cd ${clonePath}`);
+      shell.exec(`cd .. && cp -r ${fileToAdd} ${clonePath} && cd ${clonePath}`);
       shell.exec("yarn remove popploy");
       shell.exec("git add .");
       shell.exec(`git commit -m "publish ${version}"`);
