@@ -2,6 +2,7 @@
 const shell = require("shelljs");
 const fs = require("fs");
 const path = require("path");
+const fsExtra = require("fs-extra");
 
 const updateVersion = require("./update-version");
 const getValue = require("./get-value");
@@ -74,7 +75,7 @@ const main = async () => {
       .readdirSync(path.resolve(__dirname, "..", "..", "..", clonePath))
       .filter((item) => !repoExclude.includes(item));
 
-    repoFile.forEach((item) => shell.exec(`rm -rf ${item}`));
+    repoFile.forEach((item) => shell.exec(`npx rimraf ${item}`));
 
     const copyFile = fs
       .readdirSync(path.resolve(__dirname, "..", "..", ".."))
@@ -82,7 +83,11 @@ const main = async () => {
     const fileToAdd = copyFile.join(" ");
 
     if (fileToAdd.length !== 0) {
-      shell.exec(`cd .. && cp -r ${fileToAdd} ${clonePath} && cd ${clonePath}`);
+      shell.exec(`cd .. `)
+      copyFile.map((item) => {
+        fsExtra.copySync(path.resolve(__dirname,"..","..", "..", item), item)
+      })
+      shell.exec(`cd ${clonePath}`);
       shell.exec("yarn remove popploy");
       shell.exec("git add .");
       shell.exec(`git commit -m "publish ${version}"`);
